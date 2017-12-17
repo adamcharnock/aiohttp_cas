@@ -17,11 +17,11 @@ async def login_handler(request):
     ticket = request.GET.get('ticket')
 
     session = await get_session(request)
-    redir = session[SESSION_KEY].get('redir')
-    login_route = request.app[APP_KEY]['LOGIN_ROUTE']
-    root_url = request.app[APP_KEY]['ROOT_URL']
-    on_success = request.app[APP_KEY]['ON_SUCCESS']
-    version = request.app[APP_KEY]['VERSION']
+    redir = session.get(SESSION_KEY, {}).get('redir')
+    login_route = request.app.get(APP_KEY, {})['LOGIN_ROUTE']
+    root_url = request.app.get(APP_KEY, {})['ROOT_URL']
+    on_success = request.app.get(APP_KEY, {})['ON_SUCCESS']
+    version = request.app.get(APP_KEY, {})['VERSION']
 
     # If we're missing neccessary data, return 400 Bad Request
     if not (request.scheme and request.host):
